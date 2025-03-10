@@ -24,7 +24,7 @@ router.get('/google/callback',
     const userData = {
       id: req.user.id,
       email: req.user.email,
-      username: req.user.displayName,
+      username: req.user.username,
       token
     };
     const redirectUrl = `https://chater-v1.vercel.app/auth/google/callback?userData=${encodeURIComponent(JSON.stringify(userData))}`;
