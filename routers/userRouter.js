@@ -21,11 +21,10 @@ router.get('/google/callback',
       email: req.user.email,
       username: req.user.displayName,
     };
-    res.status(200).json({
-      message: 'Login berhasil',
-      data: userData,
-      status: 200
-    });
+    const redirectUrl = `https://chater-v1.vercel.app/auth/google/callback?userData=${encodeURIComponent(JSON.stringify(userData))}`;
+
+    // Redirect ke URL frontend dengan data pengguna
+    res.redirect(redirectUrl);
   }
 );
 
