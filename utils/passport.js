@@ -10,15 +10,16 @@ passport.use(new GoogleStrategy({
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
-    let user = await User.findOne({ googleId: profile.id });
-    if (!user) {
-      user = await new User({
-        idUser: Math.random().toString(36).substr(2, 5),
+    let user = await User.findOneAndUpdate(
+      { googleId: profile.id },
+      {
         googleId: profile.id,
         username: profile.displayName,
         email: profile.emails[0].value
-      }).save();
-    }
+      },
+      { new: true, upsert: true } // `new: true` memastikan kita mendapatkan data terbaru, `upsert: true` untuk membuat dokumen baru jika tidak ditemukan
+    );
+
     return done(null, user);
   } catch (err) {
     return done(err, null);
