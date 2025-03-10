@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/userController');
 const passport = require('passport');
+const jwt = require('jsonwebtoken');
 
 // Register
 router.post('/register', authController.register);
@@ -16,10 +17,13 @@ router.get('/google', passport.authenticate('google', { scope: ['profile', 'emai
 router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: 'https://chater-v1.vercel.app/auth/login' }),
   (req, res) => {
+
+    const token = jwt.sign({ idUser: req.user.id }, 'Chater', {expiresIn: "2h"})
     const userData = {
       id: req.user.id,
       email: req.user.email,
       username: req.user.displayName,
+      token
     };
     const redirectUrl = `https://chater-v1.vercel.app/auth/google/callback?userData=${encodeURIComponent(JSON.stringify(userData))}`;
 
