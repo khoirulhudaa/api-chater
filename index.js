@@ -10,7 +10,11 @@ const Messages = require('./models/roomModel');
 require('dotenv').config();
 
 const app = express();
-app.use(cors({ origin: 'https://chater-v1.vercel.app', credentials: true }));
+app.use(cors({
+    origin: 'https://chater-v1.vercel.app',
+    credentials: true,
+    methods: ['GET', 'POST', 'OPTIONS'] 
+}));
 
 app.use(session({ secret: 'secret', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
@@ -20,7 +24,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         origin: 'https://chater-v1.vercel.app',
-        methods: ['GET', 'POST'],
+        methods: ['GET', 'POST', 'OPTIONS'],
         credentials: true
     }
 });
@@ -81,7 +85,7 @@ io.on('connection', async (socket) => {
         });
 
         await messageDoc.save();
-
+        console.log('message contents:', messageDoc.contents)
         io.to(room).emit('loadMessages', messageDoc.contents);
     });
     
