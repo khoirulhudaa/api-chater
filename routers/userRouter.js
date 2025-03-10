@@ -18,6 +18,8 @@ router.get('/google/callback',
   passport.authenticate('google', { failureRedirect: 'https://chater-v1.vercel.app/auth/login' }),
   (req, res) => {
 
+    console.log('req passport:', req.user)
+
     const token = jwt.sign({ idUser: req.user.id }, 'Chater', {expiresIn: "2h"})
     const userData = {
       id: req.user.id,
