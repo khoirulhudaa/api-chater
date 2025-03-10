@@ -30,6 +30,7 @@ const userSchema = new mongoose.Schema({
   googleId: { // Optional: simpan Google ID untuk referensi
     type: String,
     unique: true,
+    index: true,
     required: false,
     sparse: true // Allow null values tapi tetap unik
   },
@@ -38,7 +39,5 @@ const userSchema = new mongoose.Schema({
     default: Date.now
   }
 }, { timestamps: true });
-
-userSchema.index({ googleId: 1 });
 
 module.exports = mongoose.model('user', userSchema);
