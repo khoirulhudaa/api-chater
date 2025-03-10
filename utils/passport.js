@@ -6,7 +6,7 @@ require('dotenv').config()
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID, // Ganti dengan Client ID dari Google
   clientSecret: process.env.GOOGLE_CLIENT_SECRET, // Ganti dengan Client Secret
-  callbackURL: 'http://localhost:3600/auth/google/callback'
+  callbackURL: 'https://api-chater.vercel.app/auth/google/callback'
 },
 async (accessToken, refreshToken, profile, done) => {
   try {
