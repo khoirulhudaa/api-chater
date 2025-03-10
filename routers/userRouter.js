@@ -14,7 +14,7 @@ router.post('/login', authController.login);
 router.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 router.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: 'http://localhost:3000/auth/login' }),
+  passport.authenticate('google', { failureRedirect: 'https://chater.vercel.app/auth/login' }),
   (req, res) => {
     const userData = {
       id: req.user.id,
