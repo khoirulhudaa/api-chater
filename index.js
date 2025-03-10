@@ -25,7 +25,10 @@ const io = new Server(server, {
     }
 });
 
-mongoose.connect(process.env.URL_MONGOOSE)
+mongoose.connect(process.env.URL_MONGOOSE, {
+    serverSelectionTimeoutMS: 30000, // Perpanjang waktu timeout untuk koneksi ke server MongoDB (30 detik)
+    socketTimeoutMS: 45000,
+})
 .then(() => {
     console.log('Database sudah terhubung!')
 })
